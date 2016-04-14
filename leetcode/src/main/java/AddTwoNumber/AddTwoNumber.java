@@ -14,8 +14,15 @@ public class AddTwoNumber {
     // assuming that both l1 and l2 are of same length.
     public ListNode add(ListNode l1, ListNode l2, int carryOver) {
         if(l1 == null && l2 == null) {
-            return null;
+           return addCarryOverToSingleList(null, carryOver);
         }
+        if(l1 !=null && l2== null) {
+            return addCarryOverToSingleList(l1, carryOver);
+        }
+        if(l1 == null && l2!=null) {
+            return addCarryOverToSingleList(l2, carryOver);
+        }
+        // if the logic reaches the below line, then l1 and l2 are non null.
         int sum = l1.val + l2.val + carryOver;
         int unitsDigit = sum % 10;
         int tensDigit = sum / 10;
@@ -23,6 +30,23 @@ public class AddTwoNumber {
         head.next = add(l1.next, l2.next, tensDigit);
         return head;
     }
+
+    private ListNode addCarryOverToSingleList(ListNode l2, int carryOver) {
+        if(carryOver == 0) {
+            return l2;
+        } else if(l2 == null) {
+            return new ListNode(carryOver);
+        } else {
+            // here carryOver is not null and l2 is not null
+            int sum = l2.val + carryOver;
+            int currentNodeVal = sum %10;
+            int furtherCarryOver = sum/10;
+            l2.val = currentNodeVal;
+            l2.next = addCarryOverToSingleList(l2.next,furtherCarryOver);
+            return l2;
+        }
+    }
+
 
     public static void main(String[] args) {
         // test1
@@ -39,13 +63,26 @@ public class AddTwoNumber {
         assert expectedResult.equals(result);
 
         //test2
-//        list1 = new ListNode(1);
-//        list1.next = new ListNode(8);
-//        list2 = new ListNode(0);
-//        result = new AddTwoNumber().add(list1,list2,0);
-//        expectedResult = new ListNode(1);
-//        expectedResult.next = new ListNode(8);
-//        assert expectedResult.equals(result);
+        list1 = new ListNode(1);
+        list1.next = new ListNode(8);
+        list2 = new ListNode(0);
+        result = new AddTwoNumber().add(list1,list2,0);
+        expectedResult = new ListNode(1);
+        expectedResult.next = new ListNode(8);
+        assert expectedResult.equals(result);
+
+
+        //test3
+        list1 = new ListNode(8);
+        list1.next = new ListNode(9);
+        list1.next.next = new ListNode(9);
+        list2 = new ListNode(2);
+        result = new AddTwoNumber().add(list1,list2,0);
+        expectedResult = new ListNode(0);
+        expectedResult.next = new ListNode(0);
+        expectedResult.next.next = new ListNode(0);
+        expectedResult.next.next.next = new ListNode(1);
+        assert expectedResult.equals(result);
 
         System.out.println("tests passed");
 
