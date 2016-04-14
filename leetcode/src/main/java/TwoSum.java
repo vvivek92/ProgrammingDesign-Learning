@@ -40,7 +40,7 @@ public class TwoSum {
                 }
             } else {
                 if(counter.get(firstElem) > 1) {
-                    return new int[] {numsAsArrayList.indexOf(firstElem),numsAsArrayList.lastIndexOf(secondElem) };
+                    return new int[] {numsAsArrayList.indexOf(firstElem),numsAsArrayList.lastIndexOf(firstElem) };
                 }
             }
         }
