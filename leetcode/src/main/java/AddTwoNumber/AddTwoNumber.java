@@ -41,9 +41,9 @@ public class AddTwoNumber {
             int sum = l2.val + carryOver;
             int currentNodeVal = sum %10;
             int furtherCarryOver = sum/10;
-            l2.val = currentNodeVal;
-            l2.next = addCarryOverToSingleList(l2.next,furtherCarryOver);
-            return l2;
+            ListNode head = new ListNode(currentNodeVal);
+            head.next = addCarryOverToSingleList(l2.next,furtherCarryOver);
+            return head;
         }
     }
 
